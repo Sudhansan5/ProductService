@@ -1,5 +1,6 @@
 package com.sudhan.ProductService.Controllers;
 
+import com.sudhan.ProductService.Exceptions.ProductNotFoundException;
 import com.sudhan.ProductService.Models.Product;
 import com.sudhan.ProductService.Services.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,32 +17,33 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    private ProductService productService;
+  private ProductService productService;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
+  public ProductController(ProductService productService) {
+    this.productService = productService;
+  }
 
-    // localhost:8080/products/1
-    @GetMapping("/{productId}")
-    public Product getSingleProduct(@PathVariable("productId") Long productId) {
-        return productService.getSingleProduct(productId);
-    }
+  // localhost:8080/products/1
+  @GetMapping("/{productId}")
+  public Product getSingleProduct(@PathVariable("productId") Long productId)
+      throws ProductNotFoundException {
+    return productService.getSingleProduct(productId);
+  }
 
-    // localhost:8080/products
-    @GetMapping()
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
-    }
+  // localhost:8080/products
+  @GetMapping()
+  public List<Product> getAllProducts() {
+    return productService.getAllProducts();
+  }
 
-    // localhost:8080/products
-    @PostMapping()
-    public Product createProduct(@RequestBody Product product) {
-        return null;
-    }
+  // localhost:8080/products
+  @PostMapping()
+  public Product createProduct(@RequestBody Product product) {
+    return null;
+  }
 
-    @PutMapping("/{id}")
-    public Product replaceProduct(@PathVariable("id") Long productId, @RequestBody Product product) {
-        return null;
-    }
+  @PutMapping("/{id}")
+  public Product replaceProduct(@PathVariable("id") Long productId, @RequestBody Product product) {
+    return null;
+  }
 }

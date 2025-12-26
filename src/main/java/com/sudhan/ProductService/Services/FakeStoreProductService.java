@@ -1,6 +1,7 @@
 package com.sudhan.ProductService.Services;
 
 import com.sudhan.ProductService.DTOs.FakeStoreProductDto;
+import com.sudhan.ProductService.Exceptions.ProductNotFoundException;
 import com.sudhan.ProductService.Models.Category;
 import com.sudhan.ProductService.Models.Product;
 
@@ -35,13 +36,17 @@ public class FakeStoreProductService implements ProductService {
   }
 
   @Override
-  public Product getSingleProduct(Long productId) {
+  public Product getSingleProduct(Long productId) throws ProductNotFoundException {
 
     ResponseEntity<FakeStoreProductDto> responseEntity =
         restTemplate.getForEntity(
             "https://fakestoreapi.com/products/" + productId, FakeStoreProductDto.class);
 
-    return convertFakeStoreProductDtoToProduct(responseEntity.getBody());
+    FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
+    if (fakeStoreProductDto == null){
+      throw new ProductNotFoundException(productId);
+    }
+    return convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
   }
 
   @Override
