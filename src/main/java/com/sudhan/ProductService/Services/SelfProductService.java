@@ -12,8 +12,8 @@ import java.util.Optional;
 
 @Service("selfProductService")
 public class SelfProductService implements ProductService {
-  private ProductRepository productRepository;
-  private CategoryRepository categoryRepository;
+  private final ProductRepository productRepository;
+  private final CategoryRepository categoryRepository;
 
   public SelfProductService(
       ProductRepository productRepository, CategoryRepository categoryRepository) {
