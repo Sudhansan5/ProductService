@@ -1,5 +1,6 @@
 package com.sudhan.ProductService.Services;
 
+import com.sudhan.ProductService.Exceptions.CategoryNotFoundException;
 import com.sudhan.ProductService.Exceptions.ProductNotFoundException;
 import com.sudhan.ProductService.Models.Category;
 import com.sudhan.ProductService.Repositories.CategoryRepository;
@@ -15,10 +16,10 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public Category getSingleCategory(Long categoryId) throws ProductNotFoundException {
+    public Category getSingleCategory(Long categoryId) throws CategoryNotFoundException {
         Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
         if (categoryOptional.isEmpty()){
-            throw new ProductNotFoundException(categoryId);
+            throw new CategoryNotFoundException(categoryId);
         }
             return categoryOptional.get();
     }

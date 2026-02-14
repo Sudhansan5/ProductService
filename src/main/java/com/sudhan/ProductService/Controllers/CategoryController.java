@@ -1,6 +1,7 @@
 package com.sudhan.ProductService.Controllers;
 
 
+import com.sudhan.ProductService.Exceptions.CategoryNotFoundException;
 import com.sudhan.ProductService.Exceptions.ProductNotFoundException;
 import com.sudhan.ProductService.Models.Category;
 import com.sudhan.ProductService.Services.CategoryService;
@@ -15,7 +16,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{categoryId}")
-    public Category getCategoryById(@PathVariable("categoryId") Long categoryId) throws ProductNotFoundException {
+    public Category getCategoryById(@PathVariable("categoryId") Long categoryId) throws CategoryNotFoundException {
         return categoryService.getSingleCategory(categoryId);
     }
 }
