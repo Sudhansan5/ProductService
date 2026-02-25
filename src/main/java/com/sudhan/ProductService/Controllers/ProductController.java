@@ -1,9 +1,12 @@
 package com.sudhan.ProductService.Controllers;
 
+import com.sudhan.ProductService.Commons.AuthCommons;
 import com.sudhan.ProductService.Exceptions.ProductNotFoundException;
 import com.sudhan.ProductService.Models.Product;
 import com.sudhan.ProductService.Services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,10 +28,25 @@ public class ProductController {
   }
 
   // localhost:8080/products/1
-  @GetMapping("/{productId}")
-  public Product getSingleProduct(@PathVariable("productId") Long productId)
-      throws ProductNotFoundException {
-    return productService.getSingleProduct(productId);
+//  @GetMapping("/{productId}")
+//  public Product getSingleProduct(@PathVariable("productId") Long productId)
+//      throws ProductNotFoundException {
+//    return productService.getSingleProduct(productId);
+//  }
+
+  @GetMapping("/{productId}/{tokenValue}")
+  public ResponseEntity<Product> getSingleProduct(@PathVariable("productId") Long productId, @PathVariable("tokenValue") String tokenValue)
+          throws ProductNotFoundException {
+    Product product = null;
+    ResponseEntity<Product> responseEntity = null;
+    if (AuthCommons.validateToken(tokenValue)){
+      product = productService.getSingleProduct(productId);
+      responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
+    }
+    else{
+      responseEntity = new ResponseEntity<>(product,HttpStatus.UNAUTHORIZED);
+    }
+    return responseEntity;
   }
 
   // localhost:8080/products
