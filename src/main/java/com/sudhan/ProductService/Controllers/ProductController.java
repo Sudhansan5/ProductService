@@ -28,23 +28,23 @@ public class ProductController {
   }
 
   // localhost:8080/products/1
-//  @GetMapping("/{productId}")
-//  public Product getSingleProduct(@PathVariable("productId") Long productId)
-//      throws ProductNotFoundException {
-//    return productService.getSingleProduct(productId);
-//  }
+  //  @GetMapping("/{productId}")
+  //  public Product getSingleProduct(@PathVariable("productId") Long productId)
+  //      throws ProductNotFoundException {
+  //    return productService.getSingleProduct(productId);
+  //  }
 
   @GetMapping("/{productId}/{tokenValue}")
-  public ResponseEntity<Product> getSingleProduct(@PathVariable("productId") Long productId, @PathVariable("tokenValue") String tokenValue)
-          throws ProductNotFoundException {
+  public ResponseEntity<Product> getSingleProduct(
+      @PathVariable("productId") Long productId, @PathVariable("tokenValue") String tokenValue)
+      throws ProductNotFoundException {
     Product product = null;
     ResponseEntity<Product> responseEntity = null;
-    if (AuthCommons.validateToken(tokenValue)){
+    if (AuthCommons.validateToken(tokenValue)) {
       product = productService.getSingleProduct(productId);
       responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
-    }
-    else{
-      responseEntity = new ResponseEntity<>(product,HttpStatus.UNAUTHORIZED);
+    } else {
+      responseEntity = new ResponseEntity<>(product, HttpStatus.UNAUTHORIZED);
     }
     return responseEntity;
   }
