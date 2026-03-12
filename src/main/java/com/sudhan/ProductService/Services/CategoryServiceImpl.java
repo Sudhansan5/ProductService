@@ -4,6 +4,9 @@ import com.sudhan.ProductService.Exceptions.CategoryNotFoundException;
 import com.sudhan.ProductService.Exceptions.ProductNotFoundException;
 import com.sudhan.ProductService.Models.Category;
 import com.sudhan.ProductService.Repositories.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
