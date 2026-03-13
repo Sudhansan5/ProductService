@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @MappedSuperclass
-public class BaseModel implements Serializable {
+public class BaseModel implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

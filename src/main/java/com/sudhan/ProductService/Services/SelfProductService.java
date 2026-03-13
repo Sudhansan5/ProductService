@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +50,8 @@ public class SelfProductService implements ProductService {
     Product product = optionalProduct.get();
     // Store the Product object under the same hash key and field
     redisTemplate.opsForHash().put(hashKey, field, product);
+    // Ensure the top-level hash key expires in 1 hour (TTL applies to keys, not fields)
+    redisTemplate.expire(hashKey, Duration.ofSeconds(5));
     return product;
   }
 
